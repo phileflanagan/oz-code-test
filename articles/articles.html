@@ -1,0 +1,34 @@
+<!-- Search Box -->
+<div class="container-fluid">
+  <form name="asdf" ng-submit="article.loadRequest()">
+  <div class="input-group">
+    <input type="text" class="form-control" placeholder="Search for..." ng-model="article.search">
+    <span class="input-group-btn">
+      <button class="btn btn-default" type="submit">Search</button>
+    </span>
+  </div>
+  </form>
+  <p class="lead text-center text-muted" ng-if="article.isLoading" id="loading">Loading...</p>
+  <p class="lead text-center" ng-if="!article.hasResults" id="loading">No Results Found</p>
+</div class="container-fluid">
+
+
+</div>
+<!-- Display Articles -->
+<div class="article" ng-repeat="a in article.articles">
+  <div class="container-fluid title">
+    <div class="btn-group pull-right">
+      <button class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">Pin to Bucket</button>
+      <div class="dropdown-menu">
+        <li class="dropdown-item" ng-repeat="b in article.buckets">
+          <a href="#" ng-click="article.handlePin(a, b.id)">{{b.name}}</a>
+        </li>
+
+      </div>
+    </div>
+    <a class="title" href="{{a.url}}" target="_blank">{{a.title}}</a>
+  </div>
+  <div class="container-fluid">
+    <p>{{a.abstract}}<p>
+  </div>
+</div>

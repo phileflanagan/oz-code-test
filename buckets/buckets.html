@@ -1,0 +1,61 @@
+
+<!-- Add Bucket -->
+<div class="container-fluid">
+  <button class="btn btn-default pull-right" ng-if="!bucket.isAdding" ng-click="bucket.isAdding = true">Add Bucket</button>
+  <form name="createbucket" ng-if="bucket.isAdding" ng-submit="bucket.addBucket()">
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="Name of New Bucket" ng-model="bucket.bucketName">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="submit">
+          Create
+        </button>
+      </span>
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button" ng-click="bucket.cancelAdd()">
+          Cancel
+        </button>
+      </span>
+    </div>
+  </form>
+</div>
+
+<!-- Display Buckets -->
+<div ng-mouseenter="this.canEdit = true" ng-mouseleave="this.canEdit = false" class="bucket" ng-repeat="b in bucket.buckets">
+  <!-- buttons -->
+  <span class="pull-right" ng-show="this.canEdit && !this.isRenaming">
+  <button class="btn btn-sm btn-default" ng-click="this.isRenaming = true">
+    <span class="glyphicon glyphicon-pencil"></span>
+  </button>
+  </span>
+
+  <!-- show title -->
+  <span ng-show="!this.isRenaming">
+  <a href="#/buckets/{{b.name}}"><h4>{{b.name}}</h4></a>
+  </span>
+
+  <!-- replace title with rename input field -->
+  <span ng-show="this.isRenaming" class="input-group">
+    <input type="text" class="form-control" placeholder="{{b.name}}" ng-model="this.bucketRename">
+    <span class="input-group-btn">
+      <button class="btn btn-default" ng-click="bucket.renameBucket(this)">
+        Rename
+      </button>
+    </span>
+    <span class="input-group-btn">
+      <button class="btn btn-default" type="button" ng-click="bucket.cancelRename(this)">
+        Cancel
+      </button>
+    </span>
+  </span>
+
+  <!-- list of articles -->
+  <ul class="list-unstyled">
+  <li ng-mouseenter="this.canRemove = true" ng-mouseleave="this.canRemove = false" ng-repeat="a in b.articles">
+    <small>
+    <a href="{{a.url}}">{{a.title}}</a>
+    <strong ng-show="this.canRemove" class="removeThis" ng-click="bucket.removeArticle(a, b)">&times;</strong>
+    <small>
+  </li>
+  <ul>
+
+</div>
